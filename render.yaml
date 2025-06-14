@@ -2,7 +2,7 @@ services:
   - type: web
     name: letterboxd-color-sort
     env: python          # use Render’s built-in Python environment
-    envVersion: 3.9      # pin to Python 3.9 (instead of the default latest 3.x)
+    envVersion: 3.10      # pin to Python 3.9 (instead of the default latest 3.x)
     buildCommand: pip install -r app/requirements.txt
     startCommand: gunicorn app.main:app --workers 2 --timeout 60
     plan: starter
