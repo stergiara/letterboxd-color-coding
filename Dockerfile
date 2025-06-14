@@ -1,7 +1,7 @@
-# 1. Base image with Python 3.10
+# Use an official Python 3.10 image
 FROM python:3.10-slim
 
-# 2. Install system packages needed for SciPy & friends
+# Install system dependencies for SciPy, scikit-image, etc.
 RUN apt-get update && apt-get install -y \
     build-essential \
     gfortran \
@@ -9,24 +9,18 @@ RUN apt-get update && apt-get install -y \
     liblapack-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 3. Set working directory
+# Create and switch to the app directory
 WORKDIR /app
 
-# 4. Copy and install Python dependencies
+# Copy and install Python dependencies
 COPY app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Copy application code
-COPY app ./app
-COPY render.yaml .
-# If you have other top-level scripts, COPY them too:
-COPY main.py .
-COPY downloaders.py .
-COPY methods.py .
-COPY mosaic.py .
+# Copy the entire app folder (with all .py files inside)
+COPY app/ ./app
 
-# 6. Expose the port your Flask/Gunicorn app listens on
+# Expose the Flask port
 EXPOSE 5000
 
-# 7. Default command to run your app via Gunicorn
+# Start the app
 CMD ["gunicorn", "app.main:app", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "60"]
