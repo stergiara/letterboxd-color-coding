@@ -12,11 +12,11 @@ RUN apt-get update && apt-get install -y \
 # 3. Set working directory
 WORKDIR /app
 
-# 4. Copy and install Python dependencies from root requirements.txt
-COPY requirements.txt .
+# Copy the app’s requirements and install them
+COPY app/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Copy the entire app folder
+# Copy everything under app/ into ./app
 COPY app/ ./app
 
 # 6. Expose your Flask port
