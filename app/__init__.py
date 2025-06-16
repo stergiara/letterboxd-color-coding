@@ -1,2 +1,2 @@
 # app/__init__.py
-from .downloaders import app
+from .main import app
