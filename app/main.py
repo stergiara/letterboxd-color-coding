@@ -1,7 +1,7 @@
 # app/main.py
 from flask import Flask, request, send_file, jsonify
 import os, tempfile, zipfile
-from downloaders import download_posters
+from .downloaders import download_posters
 
 app = Flask(__name__, static_folder=None)
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
